@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .hero{
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            background-size: cover;
+            background-repeat: no-repeat;
+             background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        /* .hero img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            overflow: hidden;
+        } */
+         .hero video{
+        /* position: absolute; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+         }
+        .img-container::before{
+              content: "";
+              position: absolute;
+              top:0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+                  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2)) !important;
+                  z-index: 1;
+        }
+        .text-content{
+            position:absolute;
+            text-align: center;
+            font-size: 50px;
+         
+            color:#fff;
+        }
+        .text-content h1 {
+    font-weight: 200 !important;
+}
+@keyframes moveLeftToCenter {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.text-content {
+  animation: moveLeftToCenter 1.5s ease-in-out forwards;
+}
+
+    </style>
+</head>
+<body>
+   
+        <div class="hero">
+            <div class="img-container">
+            <!-- <img src="bg.jpg" alt=""> -->
+           <video autoplay muted loop playsinline> <source src="video1.mp4"></video>
+</div>
+<div class="text-content">
+    <h1>
+        Hii I m Ayushi
+    </h1>
+</div>
+            <!-- <h1>Hello!</h1> -->
+        </div>
+
+
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+             AOS.init();
+        </script>
+    
+</body>
+</html>

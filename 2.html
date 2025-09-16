@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Background Video</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <style>
+      /* --------------------------------------------
+       1) RESET + BOX-SIZING
+    --------------------------------------------- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* --------------------------------------------
+       2) HERO CONTAINER
+    --------------------------------------------- */
+      .hero {
+        position: relative; /* establish a stacking context */
+        width: 100%;
+        height: 100vh; /* full viewport height */
+        overflow: hidden; /* hide any overflow */
+        display: flex;
+        justify-content: center; /* center text horizontally */
+        align-items: center; /* center text vertically */
+      }
+
+      /* --------------------------------------------
+       3) BACKGROUND VIDEO
+       –– absolute so it sits behind .text-content
+       –– object-fit: cover to preserve aspect ratio
+    --------------------------------------------- */
+      .hero video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* fill container without distortion */
+        z-index: 0; /* behind everything elseZdt6 */
+      }
+
+      /* --------------------------------------------
+       4) DARK OVERLAY (optional, improves text contrast)
+    --------------------------------------------- */
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+      }
+
+      /* --------------------------------------------
+       5) TEXT CONTENT (on top of video + overlay)
+    --------------------------------------------- */
+      .text-content {
+        position: relative; /* sits above video and overlay */
+        z-index: 2;
+        text-align: center;
+        color: #fff;
+        /* Use a responsive unit for font-size: 
+         5vw will be 5% of the viewport width—but we'll cap it */
+        font-size: clamp(1.5rem, 5vw, 3rem);
+        padding: 0 1rem; /* small horizontal padding on narrow screens */
+        animation: moveLeftToCenter 1.5s ease-in-out forwards;
+      }
+
+      @keyframes moveLeftToCenter {
+        from {
+          transform: translateX(-100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      /* --------------------------------------------
+       6) MEDIA QUERY EXAMPLE (optional): 
+       Further tweak on very small devices (max-width 480px)
+    --------------------------------------------- */
+      @media screen and (max-width: 480px) {
+        .text-content {
+          font-size: 1.5rem; /* override if needed */
+        }
+      }
+      /* 1) Keep the dropdown’s toggle styles, but force the menu to show on hover */
+      /* Show the menu when you hover over its parent <li> */
+      .navbar-nav .dropdown:hover > .dropdown-menu {
+        display: block;
+        margin-top: 0; /* remove Bootstrap’s default 0.125rem offset */
+      }
+
+      .navbar-nav .dropdown:hover > .dropdown-toggle::after {
+        transform: rotate(180deg); /* flip the caret on hover */
+      }
+
+      /* 3) Prevent the default “click to open” behavior from interfering */
+      .navbar-nav .dropdown .dropdown-menu {
+        transition: none; /* disable fade-in transition on click */
+      }
+      .navbar-nav .dropdown .dropdown-toggle:focus + .dropdown-menu {
+        /* if someone tabs to the link, don’t keep it open */
+        display: block;
+      }
+      .sticky-top {
+  z-index: 1100;
+}
+    </style>
+  </head>
+
+  <body>
+    
+      <nav class="navbar navbar-expand-lg navbar-light bg-light py-4 sticky-top">
+        <div class="container-fluid">
+          <!-- Brand on the left -->
+          <a class="navbar-brand ms-4" href="#">Navbar</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Use ms-auto here to push the menu to the right -->
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto me-5 gap-5">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#home"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#feature">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Dropdown link
+                </a>
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="navbarDropdownMenuLink"
+                >
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+<section id="home">
+      <div class="hero">
+        <div class="video-container">
+          <video autoplay muted loop playsinline>
+            <source src="video1.mp4" type="video/mp4" />
+            <!-- fallback text if video unsupported -->
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+        <!-- Background video -->
+
+        <!-- Overlay/Dark layer is handled by .hero::before -->
+
+        <!-- Text on top of video -->
+        <div
+          class="text-content"
+          data-aos="fade-left"
+          data-aos-delay="400"
+          data-aos-duration="1200"
+          data-aos-easing="ease-in-out"
+        >
+          <h1>Hii I’m Ayushi</h1>
+        </div>
+      </div>
+    </section>
+    <section id="feature">
+      <h1>Feature Section</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis quaerat
+        magnam optio id, dolorum accusamus expedita delectus! Assumenda incidunt
+        est accusantium tempora voluptatibus ad omnis harum, debitis id
+        consectetur ipsum, totam hic odit qui? Delectus eveniet facilis rerum
+        expedita animi suscipit, id qui enim magni distinctio vitae sed corporis
+        ipsam laudantium! Adipisci fugiat repellendus ratione, blanditiis
+        sapiente non recusandae ad perspiciatis praesentium corporis voluptates
+        doloremque facilis ipsam eius aliquam! Eaque consequatur dolorem
+        obcaecati mollitia possimus iusto perspiciatis iure reprehenderit veniam
+        commodi excepturi est atque dolore voluptatem repellat, exercitationem
+        soluta maiores autem illum quidem magnam doloribus? Error, asperiores
+        nobis, dolor debitis perspiciatis doloremque, sapiente ullam vel
+        repellendus quasi rerum adipisci quae cumque tempore libero. Ipsam
+        consectetur quia facilis dolore iste! A enim velit adipisci neque ad
+        quibusdam recusandae. Minima, harum officia sunt aspernatur earum ipsa.
+        Amet, officia atque praesentium non ad necessitatibus a natus voluptas
+        dicta, in laboriosam. Perferendis nisi aperiam ipsam excepturi inventore
+        dolorum dolorem quo deserunt ad laborum! Corrupti autem veritatis,
+        facere corporis impedit, modi aliquam molestiae explicabo unde, ea nemo
+        praesentium harum magnam numquam vitae sapiente veniam! Maiores
+        cupiditate, nesciunt culpa similique sit magni, deserunt sequi quo
+        perferendis sed labore architecto veniam incidunt tenetur quibusdam id
+        molestiae at nostrum soluta. Obcaecati aut, explicabo cumque,
+        praesentium quas, totam saepe mollitia dolore nostrum beatae expedita
+        omnis? Quaerat, unde, quis blanditiis aperiam consequuntur voluptatem
+        quibusdam suscipit facere sint, quas ipsum fugiat mollitia doloremque
+        veritatis? Incidunt, ad veritatis? Cum, quaerat. Molestiae aliquid
+        explicabo numquam dolorem, facere eius aliquam nulla, modi libero vero
+        temporibus sit earum quis ullam minima dolorum quo perspiciatis quae ea
+        aperiam. Laudantium eaque repellat beatae, delectus illo blanditiis quo
+        magnam omnis, quisquam, debitis ab magni cum in commodi voluptate
+        libero. Eos possimus perspiciatis aspernatur commodi voluptates
+        adipisci, perferendis at, suscipit, deserunt corrupti ea! Ad officiis
+        dolorem esse neque ex aliquid, alias molestiae dicta architecto. Ea,
+        quos! Ullam perspiciatis odio excepturi iure minima totam enim, omnis
+        debitis reiciendis et ad porro fuga, aperiam dolores voluptatibus
+        eligendi officiis, corporis amet deserunt cumque animi ipsam autem
+        laboriosam dolorum? Atque culpa assumenda et tempora eligendi ex
+        consequatur deleniti quia quibusdam quaerat, autem consectetur
+        voluptates itaque voluptatibus placeat perspiciatis quod voluptatem
+        cupiditate rem voluptatum exercitationem illum vero laudantium. Porro
+        quaerat unde temporibus necessitatibus nisi at doloribus culpa non
+        doloremque corporis ab rerum, assumenda consectetur blanditiis eveniet
+        reiciendis neque molestiae explicabo, architecto, sit dolore!
+        Repudiandae fugit dolor cumque minima id eum harum voluptatem
+        accusantium ratione autem, adipisci earum eligendi ducimus voluptatibus
+        sequi veniam? Eveniet laborum natus, inventore maxime soluta
+        exercitationem enim reprehenderit minima neque a sunt et dolor quisquam
+        sit quidem iusto perferendis incidunt. Error similique, molestias odio
+        aperiam eum exercitationem sequi quas laboriosam esse. Sunt vel corrupti
+        quas accusantium placeat praesentium veritatis, debitis ad similique,
+        hic iure quis fugiat quia incidunt eius nihil dolore aliquid amet?
+        Veritatis eos amet numquam reprehenderit minima fugiat voluptates
+        similique repudiandae, explicabo aspernatur quis harum. Incidunt beatae
+        sed inventore consequatur, neque pariatur maxime animi sequi soluta
+        reiciendis nisi sunt facilis blanditiis, ipsum tenetur quia id aliquid,
+        perspiciatis architecto obcaecati?
+      </p>
+    </section>
+    <!-- <section id="Pricing">
+      <h1>Pricing Section</h1>
+      <div class="row">
+        <div class="col-md-4 d-flex justify-content-center mb-4">
+          <div class="card" style="width: 18rem">
+            <img src="..." class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center mb-4">
+          <div class="card" style="width: 18rem">
+            <img src="..." class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center mb-4">
+          <div class="card" style="width: 18rem">
+            <img src="..." class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-4">
+            <div class="card" style="width: 18rem">
+              <img src="..." class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card" style="width: 18rem">
+              <img src="..." class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card" style="width: 18rem">
+              <img src="..." class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+    <section>
+      <div class="container ">
+        <div class="row justify-content-center">
+          <!-- Now each .col-md-4 is a direct child of .row -->
+          <div class="col-md-4 px-5">
+            <div class="card" >
+              <img
+                src="https://via.placeholder.com/286x180"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Card title 1</h5>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 px-5">
+            <div class="card" >
+              <img
+                src="https://via.placeholder.com/286x180"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Card title 2</h5>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 px-5">
+            <div class="card">
+              <img
+                src="https://via.placeholder.com/286x180"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Card title 3</h5>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+<section>
+
+    <div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">@</span>
+  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+  <span class="input-group-text" id="basic-addon2">@example.com</span>
+</div>
+
+<label for="basic-url" class="form-label">Your vanity URL</label>
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
+  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text">$</span>
+  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+  <span class="input-group-text">.00</span>
+</div>
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Username" aria-label="Username">
+  <span class="input-group-text">@</span>
+  <input type="text" class="form-control" placeholder="Server" aria-label="Server">
+</div>
+
+<div class="input-group">
+  <span class="input-group-text">With textarea</span>
+  <textarea class="form-control" aria-label="With textarea"></textarea>
+</div>
+</section>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true, // run animation only once
+      });
+    </script>
+  </body>
+</html>
